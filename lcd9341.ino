@@ -4,9 +4,9 @@
 // Uno port/pin : PD7 PD6 PD5 PD4 PD3 PD2 PB1 PB0
 // Mega dig. pin:  29  28  27  26  25  24  23  22
 #define LCD_RD   A0
-#define LCD_WR   A1     
-#define LCD_RS   A2        
-#define LCD_CS   A3       
+#define LCD_WR   A1
+#define LCD_RS   A2
+#define LCD_CS   A3
 #define LCD_REST A4
 
 void Lcd_Writ_Bus(unsigned char d){
@@ -158,8 +158,7 @@ void LCD_Fill(int x,int y,int width,int height,unsigned int color)
   LCD_EndWriting();
 }
 
-void H_line(unsigned int x, unsigned int y, unsigned int l, unsigned int c)                   
-{ 
+void H_line(unsigned int x, unsigned int y, unsigned int l, unsigned int c){ 
   unsigned int i,j;
   Lcd_Write_Com(0x02c); //write_memory_start
   digitalWrite(LCD_RS,HIGH);
@@ -167,15 +166,13 @@ void H_line(unsigned int x, unsigned int y, unsigned int l, unsigned int c)
   l=l+x;
   Address_set(x,y,l,y);
   j=l*2;
-  for(i=1;i<=j;i++)
-  {
+  for(i=1;i<=j;i++){
     Lcd_Write_Data(c);
   }
-  digitalWrite(LCD_CS,HIGH);   
+  digitalWrite(LCD_CS,HIGH);
 }
 
-void V_line(unsigned int x, unsigned int y, unsigned int l, unsigned int c)                   
-{ 
+void V_line(unsigned int x, unsigned int y, unsigned int l, unsigned int c){
   unsigned int i,j;
   Lcd_Write_Com(0x02c); //write_memory_start
   digitalWrite(LCD_RS,HIGH);
@@ -183,35 +180,28 @@ void V_line(unsigned int x, unsigned int y, unsigned int l, unsigned int c)
   l=l+y;
   Address_set(x,y,x,l);
   j=l*2;
-  for(i=1;i<=j;i++)
-  { 
+  for(i=1;i<=j;i++){ 
     Lcd_Write_Data(c);
   }
-  digitalWrite(LCD_CS,HIGH);   
+  digitalWrite(LCD_CS,HIGH);
 }
 
-void Rect(unsigned int x,unsigned int y,unsigned int w,unsigned int h,unsigned int c)
-{
+void Rect(unsigned int x,unsigned int y,unsigned int w,unsigned int h,unsigned int c){
   H_line(x  , y  , w, c);
   H_line(x  , y+h, w, c);
   V_line(x  , y  , h, c);
   V_line(x+w, y  , h, c);
 }
 
-void Rectf(unsigned int x,unsigned int y,unsigned int w,unsigned int h,unsigned int c)
-{
+void Rectf(unsigned int x,unsigned int y,unsigned int w,unsigned int h,unsigned int c){
   unsigned int i;
-  for(i=0;i<h;i++)
-  {
+  for(i=0;i<h;i++){
     H_line(x  , y  , w, c);
     H_line(x  , y+i, w, c);
   }
 }
 
-
-
-void setup()
-{
+void setup(){
   Lcd_Init();
   LCD_Fill(0,0,240,320,RGB(31,63,31));
   //cube1
@@ -250,7 +240,6 @@ void setup()
 
 
 
-void loop()
-{
+void loop(){
   //Rect(random(300),random(300),random(300),random(300),random(65535)); // rectangle at x, y, with, hight, color
 }

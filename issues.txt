@@ -1,3 +1,2 @@
 The shape of LCD_Fill() is not a prefect rectangle
 Update speed is too slow
-The codes ar not formated
