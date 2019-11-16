@@ -213,28 +213,15 @@ void setup()
 {
   Lcd_Init();
   LCD_Fill(0,0,240,320,RGB(255,255,255));
-  LCD_Fill(10,10,220,300,RGB(255,0,0));
-//  for(int i=0;i<10;i++)
-//  {
-//    Rect(random(300),random(300),random(300),random(300),random(65535)); // rectangle at x, y, with, hight, color
-//  }
+  for(int i = 10;i<100;i++){
+    LCD_Fill(i,i,240-(2*i),320-(2*i),RGB(255-i,255-i,255-i));
+  }
+  //LCD_Fill(10,10,220,300,RGB(255,0,0));
 }
 
 
 
 void loop()
 {
-  /*
-  //black,white
-  LCD_Clear(RGB565(0,0,0));
-  LCD_Clear(RGB565(255,255,255));
-  //red,green,blue
-  LCD_Clear(RGB565(255,0,0));
-  LCD_Clear(RGB565(0,255,0));
-  LCD_Clear(RGB565(0,0,255));
-  //yellow,skyblue,purple
-  LCD_Clear(RGB565(255,255,0));
-  LCD_Clear(RGB565(0,255,255));
-  LCD_Clear(RGB565(255,0,255));
-  */
+  //Rect(random(300),random(300),random(300),random(300),random(65535)); // rectangle at x, y, with, hight, color
 }
