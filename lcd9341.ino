@@ -41,10 +41,6 @@ void Address_set(unsigned int x1,unsigned int y1,unsigned int x2,unsigned int y2
   Lcd_Write_Com(0x2c);
 }
 
-int RGB(int r,int g,int b){
-  return ((b & 31) + ((g & 63) << 5) + ((r & 31) << 11));
-}
-
 void Lcd_Init(void){
   for(int p=0;p<10;p++)
   {
@@ -137,18 +133,28 @@ void Lcd_Init(void){
   Lcd_Write_Com(0x2c);
 }
 
+int RGB(int r,int g,int b){
+  return ((b & 31) + ((g & 63) << 5) + ((r & 31) << 11));
+}
+
+void LCD_StartWriting(){
+  digitalWrite(LCD_CS,LOW);
+}
+void LCD_EndWriting(){
+  digitalWrite(LCD_CS,HIGH);
+}
+
 void LCD_Fill(int x,int y,int width,int height,unsigned int color)
 {
-  digitalWrite(LCD_CS,LOW);//start writing screen
-  Address_set(x,y,x+width,y+height);//set writing area
-  //filling colors
+  LCD_StartWriting();
+  Address_set(x,y,x+width,y+height);
   for(int i=x;i<x+width;i++){
     for(int j=y;j<y+height;j++){
       Lcd_Write_Data(color>>8);
       Lcd_Write_Data(color);
     }
   }
-  digitalWrite(LCD_CS,HIGH);//end writing screen
+  LCD_EndWriting();
 }
 
 void H_line(unsigned int x, unsigned int y, unsigned int l, unsigned int c)                   
