@@ -218,7 +218,11 @@ void setup()
   digitalWrite(A3, HIGH);
   digitalWrite(A4, HIGH);
   Lcd_Init();
- //LCD_Clear(0xf800);
+  LCD_Clear(RGB565(255,255,255));
+  for(int i=0;i<10;i++)
+  {
+    Rect(random(300),random(300),random(300),random(300),random(65535)); // rectangle at x, y, with, hight, color
+  }
 }
 
 int RGB565(int r,int g,int b){
@@ -227,22 +231,17 @@ int RGB565(int r,int g,int b){
 
 void loop()
 {
+  /*
   //black,white
-   LCD_Clear(RGB565(0,0,0));
-   LCD_Clear(RGB565(255,255,255));
+  LCD_Clear(RGB565(0,0,0));
+  LCD_Clear(RGB565(255,255,255));
   //red,green,blue
-   LCD_Clear(RGB565(255,0,0));
-   LCD_Clear(RGB565(0,255,0));
-   LCD_Clear(RGB565(0,0,255));
-   
-   LCD_Clear(RGB565(255,255,0));
-   LCD_Clear(RGB565(0,255,255));
-   LCD_Clear(RGB565(255,0,255));
-  /*   
-  for(int i=0;i<1000;i++)
-  {
-    Rect(random(300),random(300),random(300),random(300),random(65535)); // rectangle at x, y, with, hight, color
-  }*/
-  
-//  LCD_Clear(0xf800);
+  LCD_Clear(RGB565(255,0,0));
+  LCD_Clear(RGB565(0,255,0));
+  LCD_Clear(RGB565(0,0,255));
+  //yellow,skyblue,purple
+  LCD_Clear(RGB565(255,255,0));
+  LCD_Clear(RGB565(0,255,255));
+  LCD_Clear(RGB565(255,0,255));
+  */
 }
