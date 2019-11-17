@@ -133,25 +133,14 @@ void Lcd_Init(void){
   Lcd_Write_Com(0x2c);
 }
 
-unsigned int RGB_origin(int r,int g,int b){
-  return ((b & 31) + ((g & 63) << 5) + ((r & 31) << 11));
-}
-
-unsigned int RGB565(int r,int g,int b){
+inline unsigned int RGB(unsigned short r,unsigned short g,unsigned short b){
   return (b + (g << 5) + (r << 11));
-}
-
-unsigned int RGB555(int r,int g,int b){
-  return (b + ((g*2) << 5) + (r << 11));
-}
-
-unsigned int RGB888(int r,int g,int b){
-  return ((b/8) + ((g/4) << 5) + ((r/8) << 11));
 }
 
 void LCD_StartWriting(){
   digitalWrite(LCD_CS,LOW);
 }
+
 void LCD_EndWriting(){
   digitalWrite(LCD_CS,HIGH);
 }
@@ -224,18 +213,18 @@ void Rectf(unsigned int x,unsigned int y,unsigned int w,unsigned int h,unsigned 
 void setup()
 {
   Lcd_Init();
-  LCD_Fill(0,0,240,320,RGB565(31,63,31));
+  LCD_Fill(0,0,240,320,RGB(31,63,31));
   //red
   for(int i = 0;i<32;i++){
-    LCD_Fill(0,0,100,100,RGB565(i,0,0));
+    LCD_Fill(0,0,100,100,RGB(i,0,0));
   }
   //green
   for(int i = 0;i<64;i++){
-    LCD_Fill(0,0,100,100,RGB565(0,i,0));
+    LCD_Fill(0,0,100,100,RGB(0,i,0));
   }
   //blue
   for(int i = 0;i<32;i++){
-    LCD_Fill(0,0,100,100,RGB565(0,0,i));
+    LCD_Fill(0,0,100,100,RGB(0,0,i));
   }
 //  for(int i = 10;i<100;i++){
 //    LCD_Fill(i,i,240-(2*i),320-(2*i),RGB(255-i,255-i,255-i));
