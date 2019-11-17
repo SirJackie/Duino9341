@@ -214,22 +214,38 @@ void setup()
 {
   Lcd_Init();
   LCD_Fill(0,0,240,320,RGB(31,63,31));
-  //red
-  for(int i = 0;i<32;i++){
-    LCD_Fill(0,0,100,100,RGB(i,0,0));
+  //cube1
+  for(int i = 0;i<31;i++){
+    LCD_Fill(20+i,60+i,100-(2*i),100-(2*i),RGB(i,2*i,i));
   }
-  //green
-  for(int i = 0;i<64;i++){
-    LCD_Fill(0,0,100,100,RGB(0,i,0));
+  //cube2
+  for(int i = 0;i<31;i++){
+    LCD_Fill(120+i,60+i,100-(2*i),100-(2*i),RGB(i,2*i,i));
   }
-  //blue
-  for(int i = 0;i<32;i++){
-    LCD_Fill(0,0,100,100,RGB(0,0,i));
+  //cube3
+  for(int i = 0;i<31;i++){
+    LCD_Fill(20+i,160+i,100-(2*i),100-(2*i),RGB(i,2*i,i));
   }
-//  for(int i = 10;i<100;i++){
-//    LCD_Fill(i,i,240-(2*i),320-(2*i),RGB(255-i,255-i,255-i));
-//  }
-  //LCD_Fill(10,10,220,300,RGB(255,0,0));
+  //cube4
+  for(int i = 0;i<31;i++){
+    LCD_Fill(120+i,160+i,100-(2*i),100-(2*i),RGB(i,2*i,i));
+  }
+  //red_cube
+  for(int i = 0;i<31;i++){
+    LCD_Fill(20+i,60+i,100-(2*i),100-(2*i),RGB(i,0,0));
+  }
+  //green_cube
+  for(int i = 0;i<31;i++){
+    LCD_Fill(120+i,60+i,100-(2*i),100-(2*i),RGB(0,2*i,0));
+  }
+  //blue_cube
+  for(int i = 0;i<31;i++){
+    LCD_Fill(20+i,160+i,100-(2*i),100-(2*i),RGB(0,0,i));
+  }
+  //yellow_cube
+  for(int i = 0;i<31;i++){
+    LCD_Fill(120+i,160+i,100-(2*i),100-(2*i),RGB(i,2*i,0));
+  }
 }
 
 
