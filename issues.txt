@@ -1,4 +1,3 @@
 The shape of LCD_Fill() is not a prefect rectangle
-RGB() is not correct
 Update speed is too slow
 The codes ar not formated
