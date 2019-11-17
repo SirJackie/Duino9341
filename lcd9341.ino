@@ -133,7 +133,7 @@ void Lcd_Init(void){
   Lcd_Write_Com(0x2c);
 }
 
-int RGB(int r,int g,int b){
+unsigned int RGB(int r,int g,int b){
   return ((b & 31) + ((g & 63) << 5) + ((r & 31) << 11));
 }
 
@@ -213,9 +213,25 @@ void setup()
 {
   Lcd_Init();
   LCD_Fill(0,0,240,320,RGB(255,255,255));
-  for(int i = 10;i<100;i++){
-    LCD_Fill(i,i,240-(2*i),320-(2*i),RGB(255-i,255-i,255-i));
+  //red
+  for(int i = 0;i<32;i++){
+    LCD_Fill(0,0,50,50,RGB(i,0,0));
   }
+  //green
+  for(int i = 0;i<64;i++){
+    LCD_Fill(0,0,50,50,RGB(0,i,0));
+  }
+  //blue
+  for(int i = 0;i<32;i++){
+    LCD_Fill(0,0,50,50,RGB(0,0,i));
+  }
+  //incorrect_red
+  for(int i = 0;i<255;i++){
+    LCD_Fill(0,0,50,50,RGB(i,0,0));
+  }
+//  for(int i = 10;i<100;i++){
+//    LCD_Fill(i,i,240-(2*i),320-(2*i),RGB(255-i,255-i,255-i));
+//  }
   //LCD_Fill(10,10,220,300,RGB(255,0,0));
 }
 
