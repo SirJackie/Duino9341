@@ -138,7 +138,7 @@ void LCD_Fill(int x,int y,int width,int height,unsigned int color)
   digitalWrite(LCD_CS,LOW);//StartWriting
   Address_set(x,y,x+width,y+height);
   for(int i=y;i<y+height;i++){
-    for(int j=x;j<x+width;j++){
+    for(int j=x;j<=x+width;j++){
       Lcd_Write_Data(color>>8);
       Lcd_Write_Data(color);
     }
@@ -153,23 +153,6 @@ inline unsigned int RGB(unsigned short r,unsigned short g,unsigned short b){
 void setup(){
   Lcd_Init();
   LCD_Fill(0,0,240,320,RGB(31,63,31));
-
-  int x = 10,y = 10,width = 100,height = 100;
-  int color = RGB(0,0,0);
-  int color2 = RGB(31,63,31);
-  digitalWrite(LCD_CS,LOW);//StartWriting
-  Address_set(x,y,x+width,y+height);
-  for(int i=y;i<y+height/2;i++){
-    for(int j=x;j<x+width;j++){
-      Lcd_Write_Data(color>>8);
-      Lcd_Write_Data(color);
-    }
-    for(int j=x;j<x+width;j++){
-      Lcd_Write_Data(color2>>8);
-      Lcd_Write_Data(color2);
-    }
-  }
-  digitalWrite(LCD_CS,HIGH);//EndWriting
 }
 
 void loop(){
