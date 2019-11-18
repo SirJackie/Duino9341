@@ -27,20 +27,6 @@ void Lcd_Write_Data(unsigned char VH){
   Lcd_Writ_Bus(VH);
 }
 
-void Address_set(unsigned int x1,unsigned int y1,unsigned int x2,unsigned int y2){
-  Lcd_Write_Com(0x2a);
-  Lcd_Write_Data(x1>>8);
-  Lcd_Write_Data(x1);
-  Lcd_Write_Data(x2>>8);
-  Lcd_Write_Data(x2);
-  Lcd_Write_Com(0x2b);
-  Lcd_Write_Data(y1>>8);
-  Lcd_Write_Data(y1);
-  Lcd_Write_Data(y2>>8);
-  Lcd_Write_Data(y2);
-  Lcd_Write_Com(0x2c);
-}
-
 void Lcd_Init(void){
   for(int p=0;p<10;p++)
   {
@@ -133,21 +119,23 @@ void Lcd_Init(void){
   Lcd_Write_Com(0x2c);
 }
 
-inline unsigned int RGB(unsigned short r,unsigned short g,unsigned short b){
-  return (b + (g << 5) + (r << 11));
-}
-
-void LCD_StartWriting(){
-  digitalWrite(LCD_CS,LOW);
-}
-
-void LCD_EndWriting(){
-  digitalWrite(LCD_CS,HIGH);
+void Address_set(unsigned int x1,unsigned int y1,unsigned int x2,unsigned int y2){
+  Lcd_Write_Com(0x2a);
+  Lcd_Write_Data(x1>>8);
+  Lcd_Write_Data(x1);
+  Lcd_Write_Data(x2>>8);
+  Lcd_Write_Data(x2);
+  Lcd_Write_Com(0x2b);
+  Lcd_Write_Data(y1>>8);
+  Lcd_Write_Data(y1);
+  Lcd_Write_Data(y2>>8);
+  Lcd_Write_Data(y2);
+  Lcd_Write_Com(0x2c);
 }
 
 void LCD_Fill(int x,int y,int width,int height,unsigned int color)
 {
-  LCD_StartWriting();
+  digitalWrite(LCD_CS,LOW);//StartWriting
   Address_set(x,y,x+width,y+height);
   for(int i=x;i<x+width;i++){
     for(int j=y;j<y+height;j++){
@@ -155,91 +143,19 @@ void LCD_Fill(int x,int y,int width,int height,unsigned int color)
       Lcd_Write_Data(color);
     }
   }
-  LCD_EndWriting();
+  digitalWrite(LCD_CS,HIGH);//EndWriting
 }
 
-void H_line(unsigned int x, unsigned int y, unsigned int l, unsigned int c){ 
-  unsigned int i,j;
-  Lcd_Write_Com(0x02c); //write_memory_start
-  digitalWrite(LCD_RS,HIGH);
-  digitalWrite(LCD_CS,LOW);
-  l=l+x;
-  Address_set(x,y,l,y);
-  j=l*2;
-  for(i=1;i<=j;i++){
-    Lcd_Write_Data(c);
-  }
-  digitalWrite(LCD_CS,HIGH);
-}
-
-void V_line(unsigned int x, unsigned int y, unsigned int l, unsigned int c){
-  unsigned int i,j;
-  Lcd_Write_Com(0x02c); //write_memory_start
-  digitalWrite(LCD_RS,HIGH);
-  digitalWrite(LCD_CS,LOW);
-  l=l+y;
-  Address_set(x,y,x,l);
-  j=l*2;
-  for(i=1;i<=j;i++){ 
-    Lcd_Write_Data(c);
-  }
-  digitalWrite(LCD_CS,HIGH);
-}
-
-void Rect(unsigned int x,unsigned int y,unsigned int w,unsigned int h,unsigned int c){
-  H_line(x  , y  , w, c);
-  H_line(x  , y+h, w, c);
-  V_line(x  , y  , h, c);
-  V_line(x+w, y  , h, c);
-}
-
-void Rectf(unsigned int x,unsigned int y,unsigned int w,unsigned int h,unsigned int c){
-  unsigned int i;
-  for(i=0;i<h;i++){
-    H_line(x  , y  , w, c);
-    H_line(x  , y+i, w, c);
-  }
+inline unsigned int RGB(unsigned short r,unsigned short g,unsigned short b){
+  return (b + (g << 5) + (r << 11));
 }
 
 void setup(){
   Lcd_Init();
   LCD_Fill(0,0,240,320,RGB(31,63,31));
-  //cube1
-  for(int i = 0;i<31;i++){
-    LCD_Fill(20+i,60+i,100-(2*i),100-(2*i),RGB(i,2*i,i));
-  }
-  //cube2
-  for(int i = 0;i<31;i++){
-    LCD_Fill(120+i,60+i,100-(2*i),100-(2*i),RGB(i,2*i,i));
-  }
-  //cube3
-  for(int i = 0;i<31;i++){
-    LCD_Fill(20+i,160+i,100-(2*i),100-(2*i),RGB(i,2*i,i));
-  }
-  //cube4
-  for(int i = 0;i<31;i++){
-    LCD_Fill(120+i,160+i,100-(2*i),100-(2*i),RGB(i,2*i,i));
-  }
-  //red_cube
-  for(int i = 0;i<31;i++){
-    LCD_Fill(20+i,60+i,100-(2*i),100-(2*i),RGB(i,0,0));
-  }
-  //green_cube
-  for(int i = 0;i<31;i++){
-    LCD_Fill(120+i,60+i,100-(2*i),100-(2*i),RGB(0,2*i,0));
-  }
-  //blue_cube
-  for(int i = 0;i<31;i++){
-    LCD_Fill(20+i,160+i,100-(2*i),100-(2*i),RGB(0,0,i));
-  }
-  //yellow_cube
-  for(int i = 0;i<31;i++){
-    LCD_Fill(120+i,160+i,100-(2*i),100-(2*i),RGB(i,2*i,0));
-  }
+  LCD_Fill(10,10,100,100,RGB(0,31,31));
 }
 
-
-
 void loop(){
-  //Rect(random(300),random(300),random(300),random(300),random(65535)); // rectangle at x, y, with, hight, color
+  
 }
