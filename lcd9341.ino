@@ -3,6 +3,7 @@
 // Uno dig. pin :   7   6   5   4   3   2   9   8
 // Uno port/pin : PD7 PD6 PD5 PD4 PD3 PD2 PB1 PB0
 // Mega dig. pin:  29  28  27  26  25  24  23  22
+#include "bitmap.h"
 #define LCD_RD   A0
 #define LCD_WR   A1
 #define LCD_RS   A2
@@ -150,13 +151,26 @@ inline unsigned int RGB(unsigned short r,unsigned short g,unsigned short b){
   return (b + (g << 5) + (r << 11));
 }
 
-void setup(){
-  Lcd_Init();
-  LCD_Fill(0,0,240,320,RGB(31,63,31));
-  for(int i = 0;i<32;i++){
-    LCD_Fill(10+i,10+i,220-(2*i),300-(2*i),RGB(31-i,(31-i)*2,31-i));
+void LcdDrawBitmap(unsigned char *bitmap,int x,int y,int width,int height){
+  unsigned char *bitmapPtr = bitmap;
+  digitalWrite(LCD_CS,LOW);//StartWriting
+  Address_set(x,y,x+width-1,y+height-1);
+  for(int i = 0;i<width*height*2;i++){
+    Lcd_Write_Data(*bitmapPtr++);
   }
-  LCD_Fill(10+32,10+32,220-(2*32),300-(2*32),RGB(31,63,31));
+  digitalWrite(LCD_CS,HIGH);//EndWriting
+  delay(10);
+}
+
+void setup(){
+  Serial.begin(9600);
+  Lcd_Init();
+  LCD_Fill(0,0,239,319,RGB(31,63,31));
+  for(int y = 0;y<320;y+=30){
+    for(int x = 0;x<240;x+=30){
+      LcdDrawBitmap(gImage_bitmap,x,y,30,30);
+    }
+  }
 }
 
 void loop(){
