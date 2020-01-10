@@ -3,7 +3,8 @@
 // Uno dig. pin :   7   6   5   4   3   2   9   8
 // Uno port/pin : PD7 PD6 PD5 PD4 PD3 PD2 PB1 PB0
 // Mega dig. pin:  29  28  27  26  25  24  23  22
-#include "bitmap.h"
+#include "a.h"
+#include <avr/pgmspace.h>
 #define LCD_RD   A0
 #define LCD_WR   A1
 #define LCD_RS   A2
@@ -166,11 +167,16 @@ void setup(){
   Serial.begin(9600);
   Lcd_Init();
   LCD_Fill(0,0,239,319,RGB(31,63,31));
-  for(int y = 0;y<320;y+=30){
-    for(int x = 0;x<240;x+=30){
-      LcdDrawBitmap(gImage_bitmap,x,y,30,30);
-    }
+  
+  unsigned char *bitmapPtr = gImage_a;
+  digitalWrite(LCD_CS,LOW);//StartWriting
+  Address_set(0,0,29,29);
+  for(int i = 0;i<16200;i++){
+    //Serial.println(bitmapPtr - gImage_bitmapbig);
+    Lcd_Write_Data(*bitmapPtr++);
+    delay(1);
   }
+  digitalWrite(LCD_CS,HIGH);//EndWriting
 }
 
 void loop(){
