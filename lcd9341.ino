@@ -36,6 +36,7 @@ void Lcd_Write_Data(unsigned char VH){
 }
 
 void Lcd_Init(void){
+  //Initialize Data Pins
   pinMode(LCD_D0,OUTPUT);
   pinMode(LCD_D1,OUTPUT);
   pinMode(LCD_D2,OUTPUT);
@@ -44,27 +45,22 @@ void Lcd_Init(void){
   pinMode(LCD_D5,OUTPUT);
   pinMode(LCD_D6,OUTPUT);
   pinMode(LCD_D7,OUTPUT);
+
+  //Initialize Command Pins
   pinMode(LCD_RD,OUTPUT);
   pinMode(LCD_WR,OUTPUT);
   pinMode(LCD_RS,OUTPUT);
   pinMode(LCD_CS,OUTPUT);
   pinMode(LCD_REST,OUTPUT);
   digitalWrite(LCD_RD, HIGH);
-  digitalWrite(LCD_WR, HIGH);
-  digitalWrite(LCD_RS, HIGH);
-  digitalWrite(LCD_CS, HIGH);
-  digitalWrite(LCD_REST, HIGH);
-  
+
+  //Reset
   digitalWrite(LCD_REST,HIGH);
   delay(5);
   digitalWrite(LCD_REST,LOW);
   delay(15);
   digitalWrite(LCD_REST,HIGH);
   delay(15);
-
-  digitalWrite(LCD_CS,HIGH);
-  digitalWrite(LCD_WR,HIGH);
-  digitalWrite(LCD_CS,LOW);  //CS
 
   Lcd_Write_Com(0xCB);
   Lcd_Write_Data(0x39);
