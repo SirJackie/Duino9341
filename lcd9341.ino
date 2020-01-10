@@ -20,8 +20,8 @@
 #define fastDigitalWriteLOW(Pin) *(portOutputRegister(digitalPinToPort(Pin)))&=~digitalPinToBitMask(Pin)  //Faster digitalWrite(Pin,LOW);
 
 void Lcd_Write_Bus(unsigned char d){
-  PORTD = (PORTD & B00000011) | ((d) & B11111100);
-  PORTB = (PORTB & B11111100) | ((d) & B00000011);
+  PORTD = d;
+  PORTB = d;
   fastDigitalWriteLOW(LCD_WR);
   fastDigitalWriteHIGH(LCD_WR);
 }
