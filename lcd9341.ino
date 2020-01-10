@@ -3,6 +3,14 @@
 // Uno dig. pin :   7   6   5   4   3   2   9   8
 // Uno port/pin : PD7 PD6 PD5 PD4 PD3 PD2 PB1 PB0
 // Mega dig. pin:  29  28  27  26  25  24  23  22
+#define LCD_D0   8
+#define LCD_D1   9
+#define LCD_D2   2
+#define LCD_D3   3
+#define LCD_D4   4
+#define LCD_D5   5
+#define LCD_D6   6
+#define LCD_D7   7
 #define LCD_RD   A0
 #define LCD_WR   A1
 #define LCD_RS   A2
@@ -28,15 +36,14 @@ void Lcd_Write_Data(unsigned char VH){
 }
 
 void Lcd_Init(void){
-  for(int p=0;p<10;p++)
-  {
-    pinMode(p,OUTPUT);
-  }
-
-
-
-
-
+  pinMode(LCD_D0,OUTPUT);
+  pinMode(LCD_D1,OUTPUT);
+  pinMode(LCD_D2,OUTPUT);
+  pinMode(LCD_D3,OUTPUT);
+  pinMode(LCD_D4,OUTPUT);
+  pinMode(LCD_D5,OUTPUT);
+  pinMode(LCD_D6,OUTPUT);
+  pinMode(LCD_D7,OUTPUT);
   pinMode(LCD_RD,OUTPUT);
   pinMode(LCD_WR,OUTPUT);
   pinMode(LCD_RS,OUTPUT);
