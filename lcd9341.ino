@@ -16,22 +16,24 @@
 #define LCD_RS   A2
 #define LCD_CS   A3
 #define LCD_REST A4
+#define fastDigitalWriteHIGH(Pin) *(portOutputRegister(digitalPinToPort(Pin)))|=digitalPinToBitMask(Pin)  //Faster digitalWrite(Pin,HIGH);
+#define fastDigitalWriteLOW(Pin) *(portOutputRegister(digitalPinToPort(Pin)))&=~digitalPinToBitMask(Pin)  //Faster digitalWrite(Pin,LOW);
 
 void Lcd_Write_Bus(unsigned char d){
   PORTD = (PORTD & B00000011) | ((d) & B11111100);
   PORTB = (PORTB & B11111100) | ((d) & B00000011);
-  *(portOutputRegister(digitalPinToPort(LCD_WR))) &=  ~digitalPinToBitMask(LCD_WR);
-  *(portOutputRegister(digitalPinToPort(LCD_WR))) |=   digitalPinToBitMask(LCD_WR);
+  fastDigitalWriteLOW(LCD_WR);
+  fastDigitalWriteHIGH(LCD_WR);
 }
 
 
 void Lcd_Write_Com(unsigned char VH){
-  *(portOutputRegister(digitalPinToPort(LCD_RS))) &=  ~digitalPinToBitMask(LCD_RS);//LCD_RS=0;
+  fastDigitalWriteLOW(LCD_RS);
   Lcd_Write_Bus(VH);
 }
 
 void Lcd_Write_Data(unsigned char VH){
-  *(portOutputRegister(digitalPinToPort(LCD_RS))) |=   digitalPinToBitMask(LCD_RS);//LCD_RS=1;
+  fastDigitalWriteHIGH(LCD_RS);
   Lcd_Write_Bus(VH);
 }
 
