@@ -169,5 +169,19 @@ void setup(){
 }
 
 void loop(){
-  
+  //Display Inversion
+  digitalWrite(LCD_CS,LOW);//StartWriting
+  LCD_W_COM(0x21);
+  delay(1000);
+  digitalWrite(LCD_CS,LOW);//StartWriting
+  LCD_W_COM(0x20);
+  delay(1000);
+
+  //Sleep Mode
+  digitalWrite(LCD_CS,LOW);//StartWriting
+  LCD_W_COM(0x10);
+  delay(1000);
+  digitalWrite(LCD_CS,LOW);//StartWriting
+  LCD_W_COM(0x11);
+  delay(1000);
 }
