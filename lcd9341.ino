@@ -32,16 +32,21 @@ void Lcd_Init(void){
   {
     pinMode(p,OUTPUT);
   }
-  pinMode(A0,OUTPUT);
-  pinMode(A1,OUTPUT);
-  pinMode(A2,OUTPUT);
-  pinMode(A3,OUTPUT);
-  pinMode(A4,OUTPUT);
-  digitalWrite(A0, HIGH);
-  digitalWrite(A1, HIGH);
-  digitalWrite(A2, HIGH);
-  digitalWrite(A3, HIGH);
-  digitalWrite(A4, HIGH);
+
+
+
+
+
+  pinMode(LCD_RD,OUTPUT);
+  pinMode(LCD_WR,OUTPUT);
+  pinMode(LCD_RS,OUTPUT);
+  pinMode(LCD_CS,OUTPUT);
+  pinMode(LCD_REST,OUTPUT);
+  digitalWrite(LCD_RD, HIGH);
+  digitalWrite(LCD_WR, HIGH);
+  digitalWrite(LCD_RS, HIGH);
+  digitalWrite(LCD_CS, HIGH);
+  digitalWrite(LCD_REST, HIGH);
   
   digitalWrite(LCD_REST,HIGH);
   delay(5);
