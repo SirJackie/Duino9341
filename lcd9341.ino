@@ -17,22 +17,22 @@
 #define LCD_CS   A3
 #define LCD_REST A4
 
-void Lcd_Writ_Bus(unsigned char d){
+void Lcd_Write_Bus(unsigned char d){
   PORTD = (PORTD & B00000011) | ((d) & B11111100);
   PORTB = (PORTB & B11111100) | ((d) & B00000011);
   *(portOutputRegister(digitalPinToPort(LCD_WR))) &=  ~digitalPinToBitMask(LCD_WR);
-  *(portOutputRegister(digitalPinToPort(LCD_WR)))|=  digitalPinToBitMask(LCD_WR);
+  *(portOutputRegister(digitalPinToPort(LCD_WR))) |=   digitalPinToBitMask(LCD_WR);
 }
 
 
 void Lcd_Write_Com(unsigned char VH){
   *(portOutputRegister(digitalPinToPort(LCD_RS))) &=  ~digitalPinToBitMask(LCD_RS);//LCD_RS=0;
-  Lcd_Writ_Bus(VH);
+  Lcd_Write_Bus(VH);
 }
 
 void Lcd_Write_Data(unsigned char VH){
-  *(portOutputRegister(digitalPinToPort(LCD_RS)))|=  digitalPinToBitMask(LCD_RS);//LCD_RS=1;
-  Lcd_Writ_Bus(VH);
+  *(portOutputRegister(digitalPinToPort(LCD_RS))) |=   digitalPinToBitMask(LCD_RS);//LCD_RS=1;
+  Lcd_Write_Bus(VH);
 }
 
 void Lcd_Init(void){
