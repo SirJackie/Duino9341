@@ -163,6 +163,9 @@ inline unsigned int RGB(unsigned short r,unsigned short g,unsigned short b){
 void setup(){
   Lcd_Init();
   LCD_Fill(0,0,239,319,RGB(31,63,31));
+  LCD_Fill(10,10,100,100,RGB(31,0,0));
+  LCD_Fill(20,20,110,110,RGB(0,63,0));
+  LCD_Fill(30,30,120,120,RGB(0,0,31));
 }
 
 void loop(){
