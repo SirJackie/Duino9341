@@ -19,7 +19,7 @@
 #define fastDigitalWriteHIGH(Pin) *(portOutputRegister(digitalPinToPort(Pin)))|=digitalPinToBitMask(Pin)  //Faster digitalWrite(Pin,HIGH);
 #define fastDigitalWriteLOW(Pin) *(portOutputRegister(digitalPinToPort(Pin)))&=~digitalPinToBitMask(Pin)  //Faster digitalWrite(Pin,LOW);
 
-void Lcd_Write_Bus(unsigned char d){
+void LCD_W_BUS(unsigned char d){
   PORTD = d;
   PORTB = d;
   fastDigitalWriteLOW(LCD_WR);
@@ -27,17 +27,17 @@ void Lcd_Write_Bus(unsigned char d){
 }
 
 
-void Lcd_Write_Com(unsigned char VH){
+void LCD_W_COM(unsigned char VH){
   fastDigitalWriteLOW(LCD_RS);
-  Lcd_Write_Bus(VH);
+  LCD_W_BUS(VH);
 }
 
-void Lcd_Write_Data(unsigned char VH){
+void LCD_W_DATA(unsigned char VH){
   fastDigitalWriteHIGH(LCD_RS);
-  Lcd_Write_Bus(VH);
+  LCD_W_BUS(VH);
 }
 
-void Lcd_Init(void){
+void LCD_INIT(void){
   //Initialize Data Pins
   pinMode(LCD_D0,OUTPUT);
   pinMode(LCD_D1,OUTPUT);
@@ -64,93 +64,93 @@ void Lcd_Init(void){
   digitalWrite(LCD_REST,HIGH);
   delay(15);
 
-  Lcd_Write_Com(0xCB);
-  Lcd_Write_Data(0x39);
-  Lcd_Write_Data(0x2C);
-  Lcd_Write_Data(0x00);
-  Lcd_Write_Data(0x34);
-  Lcd_Write_Data(0x02);
+  LCD_W_COM(0xCB);
+  LCD_W_DATA(0x39);
+  LCD_W_DATA(0x2C);
+  LCD_W_DATA(0x00);
+  LCD_W_DATA(0x34);
+  LCD_W_DATA(0x02);
 
-  Lcd_Write_Com(0xCF);
-  Lcd_Write_Data(0x00);
-  Lcd_Write_Data(0XC1);
-  Lcd_Write_Data(0X30);
+  LCD_W_COM(0xCF);
+  LCD_W_DATA(0x00);
+  LCD_W_DATA(0XC1);
+  LCD_W_DATA(0X30);
 
-  Lcd_Write_Com(0xE8);
-  Lcd_Write_Data(0x85);
-  Lcd_Write_Data(0x00);
-  Lcd_Write_Data(0x78);
+  LCD_W_COM(0xE8);
+  LCD_W_DATA(0x85);
+  LCD_W_DATA(0x00);
+  LCD_W_DATA(0x78);
 
-  Lcd_Write_Com(0xEA);
-  Lcd_Write_Data(0x00);
-  Lcd_Write_Data(0x00);
+  LCD_W_COM(0xEA);
+  LCD_W_DATA(0x00);
+  LCD_W_DATA(0x00);
  
-  Lcd_Write_Com(0xED);
-  Lcd_Write_Data(0x64);
-  Lcd_Write_Data(0x03);
-  Lcd_Write_Data(0X12);
-  Lcd_Write_Data(0X81);
+  LCD_W_COM(0xED);
+  LCD_W_DATA(0x64);
+  LCD_W_DATA(0x03);
+  LCD_W_DATA(0X12);
+  LCD_W_DATA(0X81);
 
-  Lcd_Write_Com(0xF7);
-  Lcd_Write_Data(0x20);
+  LCD_W_COM(0xF7);
+  LCD_W_DATA(0x20);
   
-  Lcd_Write_Com(0xC0);    //Power control 
-  Lcd_Write_Data(0x23);   //VRH[5:0] 
+  LCD_W_COM(0xC0);    //Power control 
+  LCD_W_DATA(0x23);   //VRH[5:0] 
  
-  Lcd_Write_Com(0xC1);    //Power control 
-  Lcd_Write_Data(0x10);   //SAP[2:0];BT[3:0] 
+  LCD_W_COM(0xC1);    //Power control 
+  LCD_W_DATA(0x10);   //SAP[2:0];BT[3:0] 
 
-  Lcd_Write_Com(0xC5);    //VCM control 
-  Lcd_Write_Data(0x3e);   //Contrast
-  Lcd_Write_Data(0x28); 
+  LCD_W_COM(0xC5);    //VCM control 
+  LCD_W_DATA(0x3e);   //Contrast
+  LCD_W_DATA(0x28); 
  
-  Lcd_Write_Com(0xC7);    //VCM control2 
-  Lcd_Write_Data(0x86);   //--
+  LCD_W_COM(0xC7);    //VCM control2 
+  LCD_W_DATA(0x86);   //--
  
-  Lcd_Write_Com(0x36);    // Memory Access Control 
-  Lcd_Write_Data(0x48);   
+  LCD_W_COM(0x36);    // Memory Access Control 
+  LCD_W_DATA(0x48);   
 
-  Lcd_Write_Com(0x3A);
-  Lcd_Write_Data(0x55);
+  LCD_W_COM(0x3A);
+  LCD_W_DATA(0x55);
 
-  Lcd_Write_Com(0xB1);
-  Lcd_Write_Data(0x00);
-  Lcd_Write_Data(0x18);
+  LCD_W_COM(0xB1);
+  LCD_W_DATA(0x00);
+  LCD_W_DATA(0x18);
  
-  Lcd_Write_Com(0xB6);    // Display Function Control 
-  Lcd_Write_Data(0x08);
-  Lcd_Write_Data(0x82);
-  Lcd_Write_Data(0x27);
+  LCD_W_COM(0xB6);    // Display Function Control 
+  LCD_W_DATA(0x08);
+  LCD_W_DATA(0x82);
+  LCD_W_DATA(0x27);
 
-  Lcd_Write_Com(0x11);    //Exit Sleep 
+  LCD_W_COM(0x11);    //Exit Sleep 
   delay(120);
         
-  Lcd_Write_Com(0x29);    //Display on 
-  Lcd_Write_Com(0x2c);
+  LCD_W_COM(0x29);    //Display on 
+  LCD_W_COM(0x2c);
 }
 
 void Address_set(unsigned int x1,unsigned int y1,unsigned int x2,unsigned int y2){
-  Lcd_Write_Com(0x2a);
-  Lcd_Write_Data(x1>>8);
-  Lcd_Write_Data(x1);
-  Lcd_Write_Data(x2>>8);
-  Lcd_Write_Data(x2);
-  Lcd_Write_Com(0x2b);
-  Lcd_Write_Data(y1>>8);
-  Lcd_Write_Data(y1);
-  Lcd_Write_Data(y2>>8);
-  Lcd_Write_Data(y2);
-  Lcd_Write_Com(0x2c);
+  LCD_W_COM(0x2a);
+  LCD_W_DATA(x1>>8);
+  LCD_W_DATA(x1);
+  LCD_W_DATA(x2>>8);
+  LCD_W_DATA(x2);
+  LCD_W_COM(0x2b);
+  LCD_W_DATA(y1>>8);
+  LCD_W_DATA(y1);
+  LCD_W_DATA(y2>>8);
+  LCD_W_DATA(y2);
+  LCD_W_COM(0x2c);
 }
 
-void LCD_Fill(int x,int y,int width,int height,unsigned int color)
+void LCD_FILL(int x,int y,int width,int height,unsigned int color)
 {
   digitalWrite(LCD_CS,LOW);//StartWriting
   Address_set(x,y,x+width-1,y+height-1);
   for(int i=y;i<y+height;i++){
     for(int j=x;j<x+width;j++){
-      Lcd_Write_Data(color>>8);
-      Lcd_Write_Data(color);
+      LCD_W_DATA(color>>8);
+      LCD_W_DATA(color);
     }
   }
   digitalWrite(LCD_CS,HIGH);//EndWriting
@@ -161,11 +161,11 @@ inline unsigned int RGB(unsigned short r,unsigned short g,unsigned short b){
 }
 
 void setup(){
-  Lcd_Init();
-  LCD_Fill(0,0,239,319,RGB(31,63,31));
-  LCD_Fill(10,10,100,100,RGB(31,0,0));
-  LCD_Fill(20,20,110,110,RGB(0,63,0));
-  LCD_Fill(30,30,120,120,RGB(0,0,31));
+  LCD_INIT();
+  LCD_FILL(0,0,239,319,RGB(31,63,31));
+  LCD_FILL(10,10,100,100,RGB(31,0,0));
+  LCD_FILL(20,20,110,110,RGB(0,63,0));
+  LCD_FILL(30,30,120,120,RGB(0,0,31));
 }
 
 void loop(){
