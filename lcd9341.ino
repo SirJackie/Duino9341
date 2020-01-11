@@ -15,7 +15,7 @@
 #define LCD_WR   A1
 #define LCD_RS   A2
 #define LCD_CS   A3
-#define LCD_REST A4
+#define LCD_RST A4
 #define fastDigitalWriteHIGH(Pin) *(portOutputRegister(digitalPinToPort(Pin)))|=digitalPinToBitMask(Pin)  //Faster digitalWrite(Pin,HIGH);
 #define fastDigitalWriteLOW(Pin) *(portOutputRegister(digitalPinToPort(Pin)))&=~digitalPinToBitMask(Pin)  //Faster digitalWrite(Pin,LOW);
 #define RGB(r,g,b) ((b&31)+((g&63)<<5)+((r&31)<<11))
@@ -54,15 +54,15 @@ void LcdInit(void){
   pinMode(LCD_WR,OUTPUT);
   pinMode(LCD_RS,OUTPUT);
   pinMode(LCD_CS,OUTPUT);
-  pinMode(LCD_REST,OUTPUT);
+  pinMode(LCD_RST,OUTPUT);
   digitalWrite(LCD_RD, HIGH);
 
   //Reset
-  digitalWrite(LCD_REST,HIGH);
+  digitalWrite(LCD_RST,HIGH);
   delay(5);
-  digitalWrite(LCD_REST,LOW);
+  digitalWrite(LCD_RST,LOW);
   delay(15);
-  digitalWrite(LCD_REST,HIGH);
+  digitalWrite(LCD_RST,HIGH);
   delay(15);
 
   LcdWriteCommand(0xCB);
