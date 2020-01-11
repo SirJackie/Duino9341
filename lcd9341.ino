@@ -18,6 +18,7 @@
 #define LCD_REST A4
 #define fastDigitalWriteHIGH(Pin) *(portOutputRegister(digitalPinToPort(Pin)))|=digitalPinToBitMask(Pin)  //Faster digitalWrite(Pin,HIGH);
 #define fastDigitalWriteLOW(Pin) *(portOutputRegister(digitalPinToPort(Pin)))&=~digitalPinToBitMask(Pin)  //Faster digitalWrite(Pin,LOW);
+#define RGB(r,g,b) ((b&31)+((g&63)<<5)+((r&31)<<11))
 
 void LcdWriteBus(unsigned char d){
   PORTD = d;
@@ -154,10 +155,6 @@ void LcdFill(int x,int y,int width,int height,unsigned int color)
     }
   }
   digitalWrite(LCD_CS,HIGH);//EndWriting
-}
-
-inline unsigned int RGB(unsigned short r,unsigned short g,unsigned short b){
-  return (b + (g << 5) + (r << 11));
 }
 
 void setup(){
