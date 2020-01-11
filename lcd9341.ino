@@ -166,22 +166,26 @@ void setup(){
   LCD_FILL(10,10,100,100,RGB(31,0,0));
   LCD_FILL(20,20,110,110,RGB(0,63,0));
   LCD_FILL(30,30,120,120,RGB(0,0,31));
+  digitalWrite(LCD_CS,LOW);//StartWriting
+  LCD_W_COM(0x33);
+  //TFA
+  LCD_W_DATA(5>>8);
+  LCD_W_DATA(5);
+  //VSA
+  LCD_W_DATA(150>>8);
+  LCD_W_DATA(150);
+  //BFA
+  LCD_W_DATA(5>>8);
+  LCD_W_DATA(5);
 }
 
-void loop(){
-  //Display Inversion
-  digitalWrite(LCD_CS,LOW);//StartWriting
-  LCD_W_COM(0x21);
-  delay(1000);
-  digitalWrite(LCD_CS,LOW);//StartWriting
-  LCD_W_COM(0x20);
-  delay(1000);
+int vsp = 0;
 
-  //Sleep Mode
-  digitalWrite(LCD_CS,LOW);//StartWriting
-  LCD_W_COM(0x10);
-  delay(1000);
-  digitalWrite(LCD_CS,LOW);//StartWriting
-  LCD_W_COM(0x11);
-  delay(1000);
+void loop(){
+  LCD_W_COM(0x37);
+  //VSP
+  LCD_W_DATA(vsp>>8);
+  LCD_W_DATA(vsp);
+  vsp++;
+  delay(10);
 }
