@@ -15,7 +15,7 @@
 #define LCD_WR   A1
 #define LCD_RS   A2
 #define LCD_CS   A3
-#define LCD_RST A4
+#define LCD_RST  A4
 #define fastDigitalWriteHIGH(Pin) *(portOutputRegister(digitalPinToPort(Pin)))|=digitalPinToBitMask(Pin)  //Faster digitalWrite(Pin,HIGH);
 #define fastDigitalWriteLOW(Pin) *(portOutputRegister(digitalPinToPort(Pin)))&=~digitalPinToBitMask(Pin)  //Faster digitalWrite(Pin,LOW);
 #define RGB(r,g,b) ((b&31)+((g&63)<<5)+((r&31)<<11))
@@ -55,7 +55,9 @@ void LcdInit(void){
   pinMode(LCD_RS,OUTPUT);
   pinMode(LCD_CS,OUTPUT);
   pinMode(LCD_RST,OUTPUT);
-  digitalWrite(LCD_RD, HIGH);
+  digitalWrite(LCD_CS,LOW);
+  digitalWrite(LCD_RD,HIGH);
+  digitalWrite(LCD_WR,LOW);
 
   //Reset
   digitalWrite(LCD_RST,HIGH);
@@ -146,7 +148,6 @@ void LcdOpenWindow(unsigned int x1,unsigned int y1,unsigned int x2,unsigned int 
 
 void LcdFill(int x,int y,int width,int height,unsigned int color)
 {
-  digitalWrite(LCD_CS,LOW);//StartWriting
   LcdOpenWindow(x,y,x+width-1,y+height-1);
   for(int i=y;i<y+height;i++){
     for(int j=x;j<x+width;j++){
@@ -154,7 +155,6 @@ void LcdFill(int x,int y,int width,int height,unsigned int color)
       LcdWriteData(color);
     }
   }
-  digitalWrite(LCD_CS,HIGH);//EndWriting
 }
 
 void setup(){
@@ -163,7 +163,6 @@ void setup(){
   LcdFill(10,10,100,100,RGB(31,0,0));
   LcdFill(20,20,110,110,RGB(0,63,0));
   LcdFill(30,30,120,120,RGB(0,0,31));
-  digitalWrite(LCD_CS,LOW);//StartWriting
   LcdWriteCommand(0x33);
   //TFA
   LcdWriteData(5>>8);
