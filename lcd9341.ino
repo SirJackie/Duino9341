@@ -20,22 +20,26 @@
 #define fastDigitalWriteLOW(Pin) *(portOutputRegister(digitalPinToPort(Pin)))&=~digitalPinToBitMask(Pin)  //Faster digitalWrite(Pin,LOW);
 #define RGB(r,g,b) ((b&31)+((g&63)<<5)+((r&31)<<11))
 
-void LcdWriteBus(unsigned char d){
-  PORTD = d;
+void LcdWriteCommand(unsigned char d){
+  //Write Command Mode On
+  fastDigitalWriteLOW(LCD_RS);
+  //Write Datas to LCD_D0 to LCD_D7
   PORTB = d;
+  PORTD = d;
+  //Enable Datas
   fastDigitalWriteLOW(LCD_WR);
   fastDigitalWriteHIGH(LCD_WR);
 }
 
-
-void LcdWriteCommand(unsigned char VH){
-  fastDigitalWriteLOW(LCD_RS);
-  LcdWriteBus(VH);
-}
-
-void LcdWriteData(unsigned char VH){
+void LcdWriteData(unsigned char d){
+  //Write Command Mode On
   fastDigitalWriteHIGH(LCD_RS);
-  LcdWriteBus(VH);
+  //Write Datas to LCD_D0 to LCD_D7
+  PORTB = d;
+  PORTD = d;
+  //Enable Datas
+  fastDigitalWriteLOW(LCD_WR);
+  fastDigitalWriteHIGH(LCD_WR);
 }
 
 void LcdInit(void){
