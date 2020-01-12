@@ -24,8 +24,8 @@ void LcdWriteCommand(unsigned char d){
   //Write Command Mode On
   fastDigitalWriteLOW(LCD_RS);
   //Write Datas to LCD_D0 to LCD_D7
-  PORTB = d;
-  PORTD = d;
+  PORTD = (PORTD & B00000011) | ((d) & B11111100); 
+  PORTB = (PORTB & B11111100) | ((d) & B00000011); 
   //Enable Datas
   fastDigitalWriteLOW(LCD_WR);
   fastDigitalWriteHIGH(LCD_WR);
@@ -35,8 +35,8 @@ void LcdWriteData(unsigned char d){
   //Write Command Mode On
   fastDigitalWriteHIGH(LCD_RS);
   //Write Datas to LCD_D0 to LCD_D7
-  PORTB = d;
-  PORTD = d;
+  PORTD = (PORTD & B00000011) | ((d) & B11111100);
+  PORTB = (PORTB & B11111100) | ((d) & B00000011);
   //Enable Datas
   fastDigitalWriteLOW(LCD_WR);
   fastDigitalWriteHIGH(LCD_WR);
