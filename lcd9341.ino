@@ -42,7 +42,7 @@ void LcdWriteData(unsigned char d){
   fastDigitalWriteHIGH(LCD_WR);
 }
 
-void setup(){
+void LcdInit(void){
   //Initialize Data Pins
   pinMode(LCD_D0,OUTPUT);
   pinMode(LCD_D1,OUTPUT);
@@ -134,12 +134,9 @@ void setup(){
         
   LcdWriteCommand(0x29);    //Display on 
   LcdWriteCommand(0x2c);
+}
 
-  //Set Writing Area
-  int x1 = 0;
-  int x2 = 239;
-  int y1 = 0;
-  int y2 = 319;
+void LcdOpenWindow(unsigned int x1,unsigned int y1,unsigned int x2,unsigned int y2){
   LcdWriteCommand(0x2a);
   LcdWriteData(x1>>8);
   LcdWriteData(x1);
@@ -150,15 +147,26 @@ void setup(){
   LcdWriteData(y1);
   LcdWriteData(y2>>8);
   LcdWriteData(y2);
-
-  //Start Writing
   LcdWriteCommand(0x2c);
-  for(int i=y1;i<=y2;i++){
-    for(int j=x1;j<=x2;j++){
-      LcdWriteData(RGB(31,63,31)>>8);
-      LcdWriteData(RGB(31,63,31));
+}
+
+void LcdFill(int x,int y,int width,int height,unsigned int color)
+{
+  LcdOpenWindow(x,y,x+width-1,y+height-1);
+  for(int i=y;i<y+height;i++){
+    for(int j=x;j<x+width;j++){
+      LcdWriteData(color>>8);
+      LcdWriteData(color);
     }
   }
+}
+
+void setup(){
+  LcdInit();
+  LcdFill(0,0,239,319,RGB(31,63,31));
+  LcdFill(10,10,100,100,RGB(31,0,0));
+  LcdFill(20,20,110,110,RGB(0,63,0));
+  LcdFill(30,30,120,120,RGB(0,0,31));
 }
 
 void loop(){
