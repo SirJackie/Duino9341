@@ -167,10 +167,21 @@ void LcdSetPixel(int x, int y, unsigned int color){
   LcdWriteData(color);
 }
 
+void LcdDrawLine(int width, int height, unsigned int color){
+  float k = (float)width / (float)height;
+  for(int x = 0; x < width; x++){
+    LcdSetPixel(x,k*x,color);
+  }
+}
+
+int x = 0;
+int y = 0;
+
 void setup(){
+  Serial.begin(9600);
   LcdInit();
   LcdFill(0,0,239,319,RGB(255,255,255));
-  LcdSetPixel(10,10,RGB(255,0,0));
+  LcdDrawLine(100,100,RGB(0,0,0));
 }
 
 void loop(){
