@@ -161,12 +161,16 @@ void LcdFill(int x,int y,int width,int height,unsigned int color)
   }
 }
 
+void LcdSetPixel(int x, int y, unsigned int color){
+  LcdOpenWindow(x,y,x,y);
+  LcdWriteData(color>>8);
+  LcdWriteData(color);
+}
+
 void setup(){
   LcdInit();
-  LcdFill(0,0,239,319,RGB(31,63,31));
-  LcdFill(10,10,100,100,RGB(31,0,0));
-  LcdFill(20,20,110,110,RGB(0,63,0));
-  LcdFill(30,30,120,120,RGB(0,0,31));
+  LcdFill(0,0,239,319,RGB(255,255,255));
+  LcdSetPixel(10,10,RGB(255,0,0));
 }
 
 void loop(){
