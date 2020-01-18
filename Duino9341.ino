@@ -192,9 +192,10 @@ void setup(){
   Serial.begin(9600);
   LcdInit();
   LcdFill(0,0,239,319,RGB(255,255,255));
-  LcdDrawLine(0,0,239,319,RGB(0,0,0));
 }
 
 void loop(){
-  
+  LcdDrawLine(0,0,239,319,RGB(0,0,0));
+  delay(20);
+  LcdDrawLine(0,0,239,319,RGB(255,255,255));
 }
